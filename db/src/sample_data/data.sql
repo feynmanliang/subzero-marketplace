@@ -35,6 +35,14 @@ COPY data.property (id,title,description,price_per_night,owner_id) FROM STDIN (F
 3	property_3	description_3	300.00	2
 \.
 --
+-- fill table data.reservation (3)
+\echo # filling table data.reservation (3)
+COPY data.reservation (id,property_id,owner_id,checkin_time,checkout_time) FROM STDIN (FREEZE ON);
+1	1	2	'2000-02-10 19:30:00+00'	'2000-02-11 9:30:00+00'
+2	1	2	'2000-02-12 18:45:00+00'	'2000-02-13 7:15:00+00'
+3	1	1	'2000-03-12 20:30:00+00'	'2000-03-13 11:30:00+00'
+\.
+--
 -- restart sequences
 ALTER SEQUENCE data.user_id_seq RESTART WITH 3;
 ALTER SEQUENCE data.todo_id_seq RESTART WITH 7;

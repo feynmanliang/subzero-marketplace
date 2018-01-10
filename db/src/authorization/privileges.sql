@@ -48,7 +48,8 @@ grant select (id, row_id, todo) on api.todos to anonymous;
 
 -------------------------------------------------------------------------------
 
--- give access to the view owner to this table
 grant select, insert, update, delete on data.property to api;
--- anonymous users can only request specific columns from this view
 grant select (id, title, description) on api.properties to anonymous;
+
+grant select, insert, update, delete on data.reservation to api;
+grant select (id, property_id, owner_id, checkin_time, checkout_time) on api.reservations to webuser;
