@@ -47,9 +47,25 @@ grant select, insert, update, delete on api.todos to webuser;
 grant select (id, row_id, todo) on api.todos to anonymous;
 
 -------------------------------------------------------------------------------
+grant select on data.user to api;
+grant select on api.users to webuser;
 
 grant select, insert, update, delete on data.property to api;
 grant select (id, title, description) on api.properties to anonymous;
+grant select, insert, update, delete on api.properties to webuser;
 
+
+alter table data.reservation enable row level security;
+create policy reservation_access_policy on data.reservation to api
+using (
+	(request.user_role() = 'webuser') and (
+		(request.user_id() = owner_id)
+		or
+		(request.user_id() = (select owner_id from api.properties where id = property_id))
+	)
+)
+with check (
+	(request.user_role() = 'webuser' and request.user_id() = owner_id)
+);
 grant select, insert, update, delete on data.reservation to api;
-grant select (id, property_id, owner_id, checkin_time, checkout_time) on api.reservations to webuser;
+grant select, insert, update, delete on api.reservations to webuser;

@@ -17,5 +17,6 @@ grant api to current_user; -- this is a workaround for RDS where the master user
 \ir todos.sql
 \ir search_todos.sql
 
+\ir users.sql
 \ir properties.sql
 \ir reservations.sql
