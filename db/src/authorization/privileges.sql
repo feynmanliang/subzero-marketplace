@@ -14,7 +14,7 @@ grant usage on schema api to anonymous, webuser;
 -- enable RLS on the table holding the data
 alter table data.todo enable row level security;
 -- define the RLS policy controlling what rows are visible to a particular application user
-create policy todo_access_policy on data.todo to api 
+create policy todo_access_policy on data.todo to api
 using (
 	-- the authenticated users can see all his todo items
 	-- notice how the rule changes based on the current user_id
@@ -36,8 +36,8 @@ grant select, insert, update, delete on data.todo to api;
 grant usage on data.todo_id_seq to webuser;
 
 
--- While grants to the view owner and the RLS policy on the underlying table 
--- takes care of what rows the view can see, we still need to define what 
+-- While grants to the view owner and the RLS policy on the underlying table
+-- takes care of what rows the view can see, we still need to define what
 -- are the rights of our application user in regard to this api view.
 
 -- authenticated users can request/change all the columns for this view
@@ -45,4 +45,10 @@ grant select, insert, update, delete on api.todos to webuser;
 
 -- anonymous users can only request specific columns from this view
 grant select (id, row_id, todo) on api.todos to anonymous;
+
 -------------------------------------------------------------------------------
+
+-- give access to the view owner to this table
+grant select, insert, update, delete on data.property to api;
+-- anonymous users can only request specific columns from this view
+grant select (id, title, description) on api.properties to anonymous;

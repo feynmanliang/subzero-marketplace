@@ -2,6 +2,8 @@ drop schema if exists data cascade;
 create schema data;
 set search_path = data, public;
 
+create extension if not exists btree_gist;
+
 -- import the type specifying the types of users we have (this is an enum).
 -- you most certainly will have to redefine this type for your application
 \ir ../libs/auth/data/user_role_type.sql
@@ -13,3 +15,6 @@ set search_path = data, public;
 -- import our application models
 \ir todo.sql
 \ir todo_relay_id.sql
+
+\ir property.sql
+\ir reservation.sql
